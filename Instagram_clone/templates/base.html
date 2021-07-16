@@ -1,0 +1,138 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Instagram clone</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'style.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+      integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body style="background-color: rgba(200,200,200,0.2);">
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="#">
+            <i class="fab fa-instagram  ilogo"></i>
+        </a>
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a href = "{% url 'index' %}" class="navbar-item">
+            <i class="material-icons">home</i>
+            Home
+          </a>
+          <a class="navbar-item">
+            <i class="material-icons"> explore </i>
+            Explore
+          </a>
+
+          <a href = "{% url 'show-notifications' %}" class="navbar-item">
+            <i class="material-icons">notifications</i>
+            Notifications
+            <!-- unread notifications indication -->
+            {% if count_notifications %}
+              <span class="badge">{{ count_notifications }}</span>
+            {% endif %}
+          </a>
+          <a href = "{% url 'inbox' %}" class="navbar-item">
+            <i class="material-icons">inbox</i>
+            Inbox
+            <!-- unread message indication -->
+            {% if directs_count %}
+              <span class="badge">{{ directs_count }}</span>
+            {% endif %}
+          </a>
+          <a href="{% url 'profile' request.user %}" class="navbar-item">
+            <i class="material-icons">face</i>
+            Profile - <strong>{{ request.user }}</strong>
+          </a>
+          <a href="{% url 'newpost' %}" style="font-weight: bold;" class="navbar-item">
+            <i style="color: green;" class="material-icons mx-1">perm_media</i>
+            New Post
+          </a>
+          <a href="{% url 'newStory' %}" style="font-weight: bold;" class="navbar-item">
+            <i style="color: green;" class="material-icons mx-1">photo_filter</i>
+            Add a story
+          </a>
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link"> Settings </a>
+
+            <div class="navbar-dropdown">
+              <a class="navbar-item"> Change password </a>
+              <a class="navbar-item"> Jobs </a>
+              <a class="navbar-item"> Contact </a>
+              <hr class="navbar-divider" />
+              <a class="navbar-item"> Report an issue </a>
+              <a href="{% url 'logout' %}" class="navbar-item"> Log out </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+      {% block banner %}{% endblock banner %}
+    <section class="section">
+      <div class="container">
+        
+        {% block content %}{% endblock content %}
+
+        {% block pagination %}{% endblock pagination %}
+      </div>
+    </section>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+
+        // Get all "navbar-burger" elements
+        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+      
+        // Check if there are any navbar burgers
+        if ($navbarBurgers.length > 0) {
+      
+          // Add a click event on each of them
+          $navbarBurgers.forEach( el => {
+            el.addEventListener('click', () => {
+      
+              // Get the target from the "data-target" attribute
+              const target = el.dataset.target;
+              const $target = document.getElementById(target);
+      
+              // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+              el.classList.toggle('is-active');
+              $target.classList.toggle('is-active');
+      
+            });
+          });
+        }
+      
+      });
+    </script>
+    {% block js %}{% endblock js %}
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static 'script.js' %}"></script>
+  </body>
+</html>

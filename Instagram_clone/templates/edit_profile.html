@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+        
+{% block content %}
+
+<div class="column is-mobile">
+    <div class="column is-half is-offset-one-quarter">
+        <div class="card">
+            <div class="card-content">
+        <form method="post" action="" enctype="multipart/form-data" role="form">{% csrf_token %}
+        <h3 class="title is-3">Edit Profile</h3>
+
+        <div class="field">
+          <label class="label is-medium">Choose your picture</label>
+          <div class="file is-boxed">
+            {{ form.picture }}
+          </div>
+        </div>
+        <div class="field">
+          <label class="label is-medium">First name</label>
+          <div class="control">
+            {{ form.first_name }}
+          </div>
+        </div>
+        <div class="field">
+          <label class="control">Last name</label>
+          <div class="file is-boxed">
+            {{ form.last_name }}
+          </div>
+        </div>
+        <div class="field">
+          <label class="control">Location</label>
+          <div class="file is-boxed">
+            {{ form.location }}
+          </div>
+        </div>
+        <div class="field">
+          <label class="control">Url</label>
+          <div class="file is-boxed">
+            {{ form.url }}
+          </div>
+        </div>
+        <div class="field">
+          <label class="control">BIO</label>
+          <div class="file is-boxed">
+            {{ form.profile_info }}
+          </div>
+        </div>
+
+        
+      <div class="row">
+        <div class="col s12">
+          <span style="color: red; font-weight: bold;">{{ form.errors }}</span>
+        </div>
+      </div>
+      <div class="field">
+        <p class="control">
+          <button type="submit" value="login" class="button is-success">
+            Update
+          </button>
+        </p>
+      </div>
+    </form>
+    </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

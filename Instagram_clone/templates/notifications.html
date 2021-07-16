@@ -1,0 +1,118 @@
+{% extends 'base.html' %} {% load static %} {% load humanize %} {% block content %}
+
+<div class="columns is-mobile is-centered">
+  <div class="column is-half">
+
+    {% for notification in notifications %}
+    <!-- For comment notifications  -->
+    {% if notification.notification_type == 2 %}
+      <div class="notification" style="padding: 0;">
+        <a href="{% url 'delete-notifications' notification.id %}" class="delete"></a>
+        <article class="media" style="padding: 0.7rem 1rem;">
+          <figure class="media-left">
+            <p >
+              {% if notification.sender.profile.picture %}
+                <img
+                style="height:3rem;width: 3rem;border-radius: 50%;"
+                  src="{{ notification.sender.profile.picture.url }}"
+                  alt="Placeholder image"
+                />
+              {% else %}
+                <img
+                  src="https://bulma.io/images/placeholders/64x64.png"
+                  alt="Placeholder image"
+                />
+              {% endif %}
+            </p>
+          </figure>
+          <div class="media-content">
+            <div class="content" style="top: 50%;transform:translateY(50%)">
+              <strong>{{ notification.sender.username }}</strong><span style="font-weight: 450;"> commented: {{ notification.text_preview }}</span> 
+              <span class="text-muted" style="font-weight: 200;">{{ notification.date | naturaltime }}</span>
+            </div>
+          </div>
+
+          <div class="media-right">
+            <figure>
+              <img style="height:3rem;width: 3rem;" src="{{ notification.post.picture.url }}" />
+            </figure>
+          </div>
+        </article>
+      </div>
+    {% endif %}
+    <!-- end comment notification -->
+    
+    <!-- For follow notifications -->
+      {% if notification.notification_type == 3 %}
+        <div class="notification" style="padding: 0;">
+          <a href="{% url 'delete-notifications' notification.id %}" class="delete"></a>
+          <article class="media" style="padding: 0.7rem 1rem;">
+            <figure class="media-left">
+              <p >
+                {% if notification.sender.profile.picture %}
+                  <img
+                  style="height:3rem;width: 3rem;border-radius: 50%;"
+                    src="{{ notification.sender.profile.picture.url }}"
+                    alt="Placeholder image"
+                  />
+                {% else %}
+                  <img
+                    src="https://bulma.io/images/placeholders/64x64.png"
+                    alt="Placeholder image"
+                  />
+                {% endif %}
+              </p>
+            </figure>
+            <div class="media-content" style="top: 50%;transform:translateY(50%)">
+              <div class="content">
+                <strong>{{ notification.sender.username }}</strong><span style="font-weight: 450;"> started following you.</span> 
+                <span class="text-muted" style="font-weight: 200;">{{ notification.date | naturaltime }}</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      {% endif %}
+    <!-- end follow notification -->
+
+    <!-- For like notifications  -->
+      {% if notification.notification_type == 1 %}
+        <div class="notification" style="padding: 0;">
+          <a href="{% url 'delete-notifications' notification.id %}" class="delete"></a>
+          <article class="media" style="padding: 0.7rem 1rem;">
+            <figure class="media-left">
+              <p >
+                {% if notification.sender.profile.picture %}
+                  <img
+                  style="height:3rem;width: 3rem;border-radius: 50%;"
+                    src="{{ notification.sender.profile.picture.url }}"
+                    alt="Placeholder image"
+                  />
+                {% else %}
+                  <img
+                    src="https://bulma.io/images/placeholders/64x64.png"
+                    alt="Placeholder image"
+                  />
+                {% endif %}
+              </p>
+            </figure>
+            <div class="media-content" style="top: 50%;transform:translateY(50%)">
+              <div class="content">
+                <strong>{{ notification.sender.username }}</strong><span style="font-weight: 450;"> liked your post.</span> 
+                <span class="text-muted" style="font-weight: 200;">{{ notification.date | naturaltime }}</span>
+              </div>
+            </div>
+
+            <div class="media-right">
+              <figure>
+                <img style="height:3rem;width: 3rem;" src="{{ notification.post.picture.url }}" />
+              </figure>
+            </div>
+          </article>
+        </div>
+      {% endif %}
+
+    {% endfor %}
+    <!-- end like notification -->
+  </div>
+</div>
+{% endblock content %}
