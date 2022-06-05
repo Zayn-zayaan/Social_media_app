@@ -16,7 +16,7 @@ from comment.models import Comment
 
 # Create your views here.
 
-
+ 
 @login_required
 def index(request):
     user = request.user
@@ -28,7 +28,7 @@ def index(request):
     for post in posts:
         group_ids.append(post.post.id)
     
-    post_items = Post.objects.filter(id__in=group_ids).all().order_by('-posted')
+    post_items = Post.objects.all().order_by('-posted')
     template = loader.get_template('index.html')
 
     context = {
